@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: 'postgres'
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-pac}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pac}
+    ports: 
+    - "${DB_PORT:-5432}:5432"
+    expose:
+    - "${DB_PORT:-5432}"
+    volumes:
+    - "./cache/postgres:/var/lib/postgresql/data:rw"
