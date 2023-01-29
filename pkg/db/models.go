@@ -9,6 +9,26 @@ import (
 )
 
 type Account struct {
-	Uuid uuid.UUID
-	Name string
+	AccountUuid uuid.UUID `json:"account_uuid"`
+	Name        string    `json:"name"`
+}
+
+type AccountToRole struct {
+	AccountUuid uuid.UUID `json:"account_uuid"`
+	RoleUuid    uuid.UUID `json:"role_uuid"`
+}
+
+type Resource struct {
+	ResourceUuid uuid.UUID `json:"resource_uuid"`
+	Content      string    `json:"content"`
+}
+
+type ResourceToRole struct {
+	ResourceUuid uuid.UUID `json:"resource_uuid"`
+	RoleUuid     uuid.UUID `json:"role_uuid"`
+}
+
+type Role struct {
+	RoleUuid uuid.UUID `json:"role_uuid"`
+	Name     string    `json:"name"`
 }
