@@ -1,5 +1,6 @@
 #general
-GO=/bin/env go
+CGO_ENABLED ?= 1
+GO=go
 
 #database
 DB_USERNAME ?= pac
@@ -11,8 +12,7 @@ PG_STRING ?= postgres://$(DB_USERNAME):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB
 
 #paths
 SERVER_PKG=./cmd/server
-
-up: run
+SERVER_BIN=./server-bin
 
 migrate:
 	@-cat ./sqlc/models/* | psql -d $(PG_STRING) >/dev/null
@@ -20,13 +20,16 @@ migrate:
 migrate-down:
 	@-psql -d $(PG_STRING) -f ./sqlc/down.sql >/dev/null
 
-psql:
+db-shell:
 	@-psql -qd $(PG_STRING) 
 
-clean-db: migrate-down migrate
-
-run:
-	@$(GO) run $(SERVER_PKG)
+db-reset: migrate-down migrate
 
 build:
-	@$(GO) build -o server-binary $(SERVER_PKG)
+	@-CGO_ENABLED=$(CGO_ENABLED) $(GO) build -o $(SERVER_BIN) $(SERVER_PKG)
+
+run: build
+	@-$(SERVER_BIN)
+
+clean:
+	rm $(SERVER_BIN)

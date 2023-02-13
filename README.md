@@ -16,8 +16,7 @@ I don't know why you would want to setup this, but oh boy it's easy (I'm just ex
 git clone git@github.com:romeq/pac.git
 # or alternatively via http:
 # git clone https://github.com/romeq/pac.git
-docker-compose up -d
-make clean-db run
+docker-compose up
 ```
 
 
