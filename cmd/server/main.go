@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"os"
@@ -54,7 +56,14 @@ func main() {
 	router.HTTPErrorHandler = api.ErrorHandler
 
 	// I hate variable naming
-	adminAccess := api.AdminAuthentication(envOr("PAC_PASSWORD", "1234"))
+	randomBytes := make([]byte, 16)
+	if _, err := rand.Read(randomBytes); err != nil {
+		log.Fatal(err)
+	}
+
+	adminPassword := envOr("PAC_PASSWORD", hex.EncodeToString(randomBytes))
+	log.Printf("Authentication token: %s", adminPassword)
+	adminAccess := api.AdminAuthentication(adminPassword)
 
 	group := router.Group("/account")
 	{
