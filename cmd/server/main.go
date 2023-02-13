@@ -12,7 +12,7 @@ import (
 	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
 	"github.com/romeq/pac/cmd/server/api"
-	"github.com/romeq/pac/pkg/db"
+	"github.com/romeq/pac/pkg/generated/db"
 )
 
 func envOr(key, def string) string {

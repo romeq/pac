@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/romeq/pac/pkg/db"
+	"github.com/romeq/pac/pkg/generated/db"
 )
 
 type API struct {
